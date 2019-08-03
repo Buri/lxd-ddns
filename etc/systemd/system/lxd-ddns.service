@@ -1,0 +1,14 @@
+[Unit]
+Description=Create dns records for lxc containers (using lxd api)
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/etc/bind
+ExecStart=/usr/bin/python3 /opt/lxd-ddns/lxdDDNS.py --key <keyfile> --domain <domain> 
+ExecStartPost=/bin/sh -c 'tail -n 15 "/var/log/lxd-ddns.log" | systemd-cat -t "lxd-ddns" '
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
