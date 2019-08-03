@@ -7,9 +7,9 @@ A daemon to update a dynamic DNS when lxc starts containers. Designed to be used
 
 ### Usage
 
-    dockerDDNS.py [-h] --key KEY [--server SERVER] --domain DOMAIN
+    lxdDDNS.py [-h] --key KEY [--server SERVER] --domain DOMAIN
                          [--zone ZONE] [--log-level LOG_LEVEL]
-                         [--log-file LOG_FILE]
+                         [--log-file LOG_FILE] [--query-timeout N] [--interfaces IFACES] [--interval N]
 
     optional arguments:
       -h, --help            show this help message and exit
@@ -26,7 +26,12 @@ A daemon to update a dynamic DNS when lxc starts containers. Designed to be used
 
 ### Installation
 
-This script is designed to run as a daemon after Docker's startup. You'll find in the `upstart` directory a configuration file to have it launched on boot.
+This script is designed to run as a daemon after lxc's startup. There is sample `systemd` configuration present. You NEED to replace `<keyfile>` and `<domain>` with real values. After that, reload `systemd`:
+```
+systemctl daemon-reload
+systemctl enable lxd-ddns
+systemctl start lxd-ddns
+```
 
 ### Future improvements
 
